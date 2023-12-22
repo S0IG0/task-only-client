@@ -1,5 +1,5 @@
 import TaskList from "@ui/TaskList.tsx";
-import {State} from "@store/store.ts";
+import {State} from "@store/taskStore.ts";
 
 const CompletedTasks = () => {
     return (

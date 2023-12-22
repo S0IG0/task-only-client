@@ -1,5 +1,5 @@
 import {Button, ButtonGroup, Card, CardContent, Chip, Divider, Stack, Typography} from "@mui/joy";
-import {State, store, Task} from "@store/store.ts";
+import {analyticStore, Event, State, Task, taskStore} from "@store/taskStore.ts";
 import {observer} from "mobx-react-lite";
 import {Reorder} from "framer-motion";
 
@@ -38,6 +38,34 @@ const variants = {
 
 const TaskCard = ({task}: Props) => {
 
+
+    const deleteAction = () => {
+        taskStore.deleteTaskById(task.id)
+        analyticStore.addAnalytic(
+            Event.CLICK,
+            "Удаление задачи",
+            "Пользователь удалил задачу"
+        )
+    }
+
+    const CompletedAction = () => {
+        taskStore.completedTask(task.id)
+        analyticStore.addAnalytic(
+            Event.CLICK,
+            "Завершение задачи",
+            "Пользователь выполнил задачу"
+        )
+    }
+
+    const ProcessAction = () => {
+        taskStore.processTask(task.id)
+        analyticStore.addAnalytic(
+            Event.CLICK,
+            "Начало выполнение задачи",
+            "Пользователь начал выполнять задачу"
+        )
+    }
+
     return (
         <Reorder.Item
             as="div"
@@ -64,26 +92,27 @@ const TaskCard = ({task}: Props) => {
                         </Stack>
                         <Divider/>
                         {/*@ts-ignore*/}
-                        <Typography level="h3">Ожидаемые сроки {task.date.toLocaleDateString('ru-RU', options)}</Typography>
+                        <Typography level="h3">Ожидаемые сроки {task.date.toLocaleDateString('ru-RU', options)}
+                        </Typography>
                         <Typography>{task.description}</Typography>
                         <ButtonGroup variant="outlined" aria-label="text button group">
                             <Button
                                 color="danger"
-                                onClick={() => store.deleteTaskById(task.id)}
+                                onClick={deleteAction}
                             >
                                 Удалить
                             </Button>
                             <Button
                                 color="success"
                                 disabled={task.state === State.COMPLETED}
-                                onClick={() => store.completedTask(task.id)}
+                                onClick={CompletedAction}
                             >
                                 Выполнена
                             </Button>
                             <Button
                                 color="primary"
                                 disabled={task.state === State.PROCESS}
-                                onClick={() => store.processTask(task.id)}
+                                onClick={ProcessAction}
                             >
                                 В процессе
                             </Button>

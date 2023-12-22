@@ -3,6 +3,7 @@ import HomePage from "@page/public/HomePage.tsx";
 import CompletedTasks from "@page/public/CompletedTasks.tsx";
 import NotStartedTasks from "@page/public/NotStartedTasks.tsx";
 import ProcessTasks from "@page/public/ProcessTasks.tsx";
+import AnalyticPage from "@page/public/AnalyticPage.tsx";
 
 export enum Visibly {
     PUBLIC,
@@ -15,6 +16,7 @@ export enum NamePages {
     COMPLETED_TASKS,
     NOT_STARTED_TASKS,
     PROCESS_TASKS,
+    ANALYTIC,
 }
 
 
@@ -49,6 +51,12 @@ export const routes: { [key in NamePages]: Page } = {
         name: "Задачи в процессе",
         path: "/process-task",
         component: <ProcessTasks/>,
+        visibly: [Visibly.PUBLIC],
+    } as Page,
+    [NamePages.ANALYTIC]: {
+        name: "Аналитика",
+        path: "/analytic",
+        component: <AnalyticPage/>,
         visibly: [Visibly.PUBLIC],
     } as Page,
 }

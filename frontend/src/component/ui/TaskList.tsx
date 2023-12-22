@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {State, store, Task} from "@store/store.ts";
+import {State, taskStore, Task} from "@store/taskStore.ts";
 import {Stack} from "@mui/joy";
 import TaskCard from "@ui/TaskCard.tsx";
 import CenterInformation from "@ui/CenterInformation.tsx";
@@ -21,21 +21,16 @@ interface Props {
 const TaskList = ({filter = Filter.ALL}: Props) => {
 
     const [items, setItems] = useState<Task[]>(
-        store.tasks.filter(task => {
+        taskStore.tasks.filter(task => {
             if (filter === Filter.ALL) return true;
             return task.state === filter
         })
     );
 
-    if (items.length === 0) {
-        return (
-            <CenterInformation text="Таких задач еще нет"/>
-        );
-    }
 
     useEffect(() => {
         const dispose = autorun(() => {
-            setItems(store.tasks.filter(task => {
+            setItems(taskStore.tasks.filter(task => {
                 if (filter === Filter.ALL) return true;
                 return task.state === filter;
             }));
@@ -43,6 +38,13 @@ const TaskList = ({filter = Filter.ALL}: Props) => {
 
         return () => dispose();
     }, [filter]);
+
+    if (items.length === 0) {
+        return (
+            <CenterInformation text="Таких задач еще нет"/>
+        );
+    }
+
 
 
     return (

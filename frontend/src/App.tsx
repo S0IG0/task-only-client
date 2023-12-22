@@ -22,41 +22,42 @@ function App() {
     const navigate = useNavigate();
 
     return (
-        <CssVarsProvider
-            defaultMode="dark"
-            disableTransitionOnChange={false}
-        >
-            <CssBaseline/>
-            <GlobalStyles
-                styles={{
-                    ':root': {
-                        margin: 20,
-                    },
-                }}
-            />
+        <>
+            <CssVarsProvider
+                defaultMode="dark"
+                disableTransitionOnChange={false}
+            >
+                <CssBaseline/>
+                <GlobalStyles
+                    styles={{
+                        ':root': {
+                            margin: 20,
+                        },
+                    }}
+                />
 
-            <DrawerAnchor>
-                <Box
-                    sx={{m: 2}}
-                >
-                    <ModeToggle/>
-                    <List
-                        variant="outlined"
-                        sx={{borderRadius: 'sm',}}
+                <DrawerAnchor>
+                    <Box
+                        sx={{m: 2}}
                     >
-                        {pages.map(page => (
-                            <ListItem key={page.name}>
-                                <ListItemButton
-                                    onClick={() => navigate(page.path)}
-                                >
-                                    {page.name}
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Box>
-            </DrawerAnchor>
-
+                        <ModeToggle/>
+                        <List
+                            variant="outlined"
+                            sx={{borderRadius: 'sm',}}
+                        >
+                            {pages.map(page => (
+                                <ListItem key={page.name}>
+                                    <ListItemButton
+                                        onClick={() => navigate(page.path)}
+                                    >
+                                        {page.name}
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Box>
+                </DrawerAnchor>
+            </CssVarsProvider>
 
             <Box>
                 <Routes>
@@ -70,7 +71,7 @@ function App() {
                     <Route path={"*"} element={<NotFoundPage/>}/>
                 </Routes>
             </Box>
-        </CssVarsProvider>
+        </>
     );
 }
 

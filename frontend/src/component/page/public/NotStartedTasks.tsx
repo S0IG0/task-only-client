@@ -1,4 +1,4 @@
-import {State} from "@store/store.ts";
+import {State} from "@store/taskStore.ts";
 import TaskList from "@ui/TaskList.tsx";
 
 const NotStartedTasks = () => {

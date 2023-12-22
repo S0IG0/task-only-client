@@ -1,6 +1,6 @@
 import {Button, FormControl, FormLabel, Input, Stack, Textarea} from "@mui/joy";
 import React, {useState} from "react";
-import {State, store, Task} from "@store/store.ts";
+import {analyticStore, Event, State, Task, taskStore} from "@store/taskStore.ts";
 
 interface Props {
     onSubmit: () => void
@@ -21,7 +21,12 @@ const CreateTaskForm = ({onSubmit}: Props) => {
             onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
                 event.preventDefault();
                 onSubmit();
-                store.addTask(task);
+                taskStore.addTask(task);
+                analyticStore.addAnalytic(
+                    Event.CLICK,
+                    "Создание новой задачи",
+                    "Пользователь корректно указал данные и создал новую задачу",
+                )
             }}
         >
             <Stack spacing={2}>

@@ -7,8 +7,9 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Radar } from 'react-chartjs-2';
-import { analyticStore, Event } from "@store/taskStore.ts";
+import {Radar} from 'react-chartjs-2';
+import {analyticStore, Event} from "@store/taskStore.ts";
+import {observer} from "mobx-react-lite";
 
 ChartJS.register(
     RadialLinearScale,
@@ -38,20 +39,6 @@ const categories = [
     },
 ];
 
-export const data = {
-    labels: categories.map(category => category.value),
-    datasets: [
-        {
-            label: 'Кол-во',
-            data: categories.map(category =>
-                analyticStore.getAnalytic(Event.CLICK, category.key).length
-            ),
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 2,
-        },
-    ],
-};
 
 const options = {
     responsive: true,
@@ -72,6 +59,20 @@ const options = {
 };
 
 const RadarChartUi = () => {
+    const data = {
+        labels: categories.map(category => category.value),
+        datasets: [
+            {
+                label: 'Кол-во',
+                data: categories.map(category =>
+                    analyticStore.getAnalytic(Event.CLICK, category.key).length
+                ),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+            },
+        ],
+    };
     return (
         <Radar
             data={data}
@@ -84,4 +85,4 @@ const RadarChartUi = () => {
     );
 };
 
-export default RadarChartUi;
+export default observer(RadarChartUi);
